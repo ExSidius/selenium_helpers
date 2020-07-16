@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: selenium-helpers
+Version: 1.0.1
+Summary: Tools to make certain selenium tasks more straightforward.
+Home-page: https://github.com/ExSidius/selenium_helpers
+Author: ExSidius
+Author-email: mukul.ram97@gmail.com
+License: MIT
+Description: # selenium_helpers
+        Helpful utilities and wrappers for Selenium work.
+        
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
