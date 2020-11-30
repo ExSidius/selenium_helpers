@@ -1,15 +1,18 @@
-import datetime
 import random
-import time
 
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
 def click(driver, element):
+    """
+    Used to resolve issues caused while clicking an element.
+    Very often, elements are overlayed in such a way that a click isn't as simple as it should be.
+
+    This addresses that; simple call it with -
+    `click(driver, element)`
+    """
+
     driver.execute_script("arguments[0].click();", element)
 
 
@@ -76,6 +79,25 @@ class URLToBe:
 
 
 def wait_until(driver, expected_condition, value, timeout=10):
+    """
+    Allows you to wait until some condition is met.
+
+    The following conditions are supported -
+
+    1. Title Is
+    2. Title Contains
+    3. URL Matches
+    4. URL Is
+    5. URL Contains
+    6. You Find
+    7. You Find All
+    8. You Find Text
+    9. You Find Button Text
+    10. You Find All Text
+    11. You Find Placeholder
+    12. You Don't Find
+    """
+
     conveniences = {
         'title is': EC.title_is,
         'title contains': EC.title_contains,
@@ -95,38 +117,7 @@ def wait_until(driver, expected_condition, value, timeout=10):
     return WebDriverWait(driver, timeout).until(ec(value), message=msg)
 
 
-def fill_searchable_select(driver, element, content):
-    el = wait_until(driver, 'you find', element)
-    click(driver, el)
-    el.clear()
-    el.send_keys(content)
-    while True:
-        select_items = wait_until(driver, 'you find all', (By.CLASS_NAME, 'el-select-dropdown__item'))
-        try:
-            if len([item for item in select_items if item.text == content]) == 1:
-                break
-        except StaleElementReferenceException:
-            pass
-    el.send_keys(Keys.ENTER)
-
-
 def potential_refresh(driver, expected_condition, value, chance=0.99):
     if random.uniform(0, 1) > chance:
         driver.refresh()
     return wait_until(driver, expected_condition, value)
-
-
-def timeout(duration, exception):
-    def decorator(f):
-        def wrapper(*args, **kwargs):
-            start = datetime.datetime.now()
-            while True:
-                if f(*args, **kwargs):
-                    break
-
-                if (datetime.datetime.now() - start).seconds // 60 > duration:
-                    raise Exception(exception)
-
-        return wrapper
-
-    return decorator
