@@ -33,5 +33,5 @@ The following conditions are supported -
 12. You Don't Find
 
 ```python
-wait_unti(driver, 'title is', 'Google')
+wait_until(driver, 'title is', 'Google')
 ```
