@@ -6,7 +6,7 @@ def readme():
 
 setup(
 	name='selenium-helpers',
-	version='1.0.1',
+	version='1.0.2',
 	description='Tools to make certain selenium tasks more straightforward.',
 	long_description=readme(),
 	long_description_content_type='text/markdown',
