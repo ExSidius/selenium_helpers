@@ -2,11 +2,12 @@
 [![PyPI Latest Release](https://img.shields.io/pypi/v/selenium_helpers.svg)](https://pypi.org/project/selenium-helpers/)
 
 
+## What is it?
 Helpful utilities and wrappers for Selenium work.
 
 There are two key utilities in here -
 
-## Click
+### Click
 Used to resolve issues caused while clicking an element.
 Very often, elements are overlayed in such a way that a click isn't as simple as it should be.
 
@@ -16,7 +17,7 @@ click(driver, element)
 ```
 
 
-## Wait Until
+### Wait Until
 
 Allows you to wait until some condition is met.
 
