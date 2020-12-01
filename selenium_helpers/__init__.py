@@ -13,7 +13,7 @@ def click(driver, element):
     `click(driver, element)`
     """
 
-    driver.execute_script("arguments[0].click();", element)
+    driver.execute_script('arguments[0].click();', element)
 
 
 class YouFindPlaceHolder:
@@ -57,7 +57,9 @@ class YouFindAllText:
         self.text = text
 
     def __call__(self, driver):
-        elements = driver.find_elements_by_xpath(f'//*[contains(text(), "{self.text}")]')
+        elements = driver.find_elements_by_xpath(
+            f'//*[contains(text(), "{self.text}")]',
+        )
         if elements:
             return elements
         else:
@@ -73,7 +75,8 @@ class URLToBe:
             res = EC.url_to_be(self.url)(driver)
             if res:
                 return res
-        except:  # pylint: disable=bare-except
+        except Exception as e:
+            print(e)
             pass
         return EC.url_to_be(f'{self.url}/')(driver)
 
