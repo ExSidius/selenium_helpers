@@ -1,6 +1,8 @@
 # selenium_helpers
-[![PyPI Latest Release](https://img.shields.io/pypi/v/selenium_helpers.svg)](https://pypi.org/project/selenium-helpers/)
 
+[![PyPI Latest Release](https://img.shields.io/pypi/v/selenium_helpers.svg)](https://pypi.org/project/selenium-helpers/)
+[![License](https://img.shields.io/pypi/l/selenium_helpers.svg)](https://github.com/ExSidius/selenium_helpers/blob/master/LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## What is it?
 Helpful utilities and wrappers for Selenium work.
