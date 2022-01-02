@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from typing import Union
 
+
 def click(driver: WebDriver, element):
     """
     Used to resolve issues caused while clicking an element.
@@ -23,10 +24,7 @@ class YouFindPlaceHolder:
         self.text = text
 
     def __call__(self, driver):
-        element = driver.find_element(
-            By.XPATH,
-            f'//input[@placeholder="{self.text}"]'
-        )
+        element = driver.find_element(By.XPATH, f'//input[@placeholder="{self.text}"]')
         return element or False
 
 
@@ -54,8 +52,7 @@ class YouFindAllText:
 
     def __call__(self, driver: WebDriver):
         elements = driver.find_elements(
-            By.XPATH,
-            f'//*[contains(text(), "{self.text}")]',
+            By.XPATH, f'//*[contains(text(), "{self.text}")]',
         )
         return elements or False
 
@@ -76,11 +73,8 @@ class URLToBe:
 
 
 def wait_until(
-        driver: WebDriver,
-        expected_condition,
-        value,
-        timeout: int = 10
-    ):
+    driver: WebDriver, expected_condition, value, timeout: int = 10,
+):
     """
     Allows you to wait until some condition is met.
 
@@ -120,11 +114,8 @@ def wait_until(
 
 
 def potential_refresh(
-        driver: WebDriver, 
-        expected_condition, 
-        value, 
-        chance: float = 0.99
-    ):
+    driver: WebDriver, expected_condition, value, chance: float = 0.99,
+):
     if random.uniform(0, 1) > chance:
         driver.refresh()
     return wait_until(driver, expected_condition, value)
