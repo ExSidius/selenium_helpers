@@ -1,10 +1,12 @@
 import random
-
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.remote.webdriver import WebDriver
 
+from typing import Union
 
-def click(driver, element):
+def click(driver: WebDriver, element):
     """
     Used to resolve issues caused while clicking an element.
     Very often, elements are overlayed in such a way that a click isn't as simple as it should be.
@@ -17,60 +19,52 @@ def click(driver, element):
 
 
 class YouFindPlaceHolder:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
     def __call__(self, driver):
-        element = driver.find_element_by_xpath(f'//input[@placeholder="{self.text}"]')
-        if element:
-            return element
-        else:
-            return False
+        element = driver.find_element(
+            By.XPATH,
+            f'//input[@placeholder="{self.text}"]'
+        )
+        return element or False
 
 
 class YouFindText:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
     def __call__(self, driver):
-        element = driver.find_element_by_xpath(f'//*[contains(text(), "{self.text}")]')
-        if element:
-            return element
-        else:
-            return False
+        element = driver.find_element(By.XPATH, f'//*[contains(text(), "{self.text}")]')
+        return element or False
 
 
 class YouFindButtonText:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
-    def __call__(self, driver):
-        element = driver.find_element_by_xpath(f'//button[.="{self.text}"]')
-        if element:
-            return element
-        else:
-            return False
+    def __call__(self, driver: WebDriver):
+        element = driver.find_element(By.XPATH, f'//button[.="{self.text}"]')
+        return element or False
 
 
 class YouFindAllText:
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.text = text
 
-    def __call__(self, driver):
-        elements = driver.find_elements_by_xpath(
+    def __call__(self, driver: WebDriver):
+        elements = driver.find_elements(
+            By.XPATH,
             f'//*[contains(text(), "{self.text}")]',
         )
-        if elements:
-            return elements
-        else:
-            return False
+        return elements or False
 
 
 class URLToBe:
-    def __init__(self, url):
+    def __init__(self, url: str):
         self.url = url
 
-    def __call__(self, driver):
+    def __call__(self, driver: WebDriver):
         try:
             res = EC.url_to_be(self.url)(driver)
             if res:
@@ -81,7 +75,12 @@ class URLToBe:
         return EC.url_to_be(f'{self.url}/')(driver)
 
 
-def wait_until(driver, expected_condition, value, timeout=10):
+def wait_until(
+        driver: WebDriver,
+        expected_condition,
+        value,
+        timeout: int = 10
+    ):
     """
     Allows you to wait until some condition is met.
 
@@ -120,7 +119,12 @@ def wait_until(driver, expected_condition, value, timeout=10):
     return WebDriverWait(driver, timeout).until(ec(value), message=msg)
 
 
-def potential_refresh(driver, expected_condition, value, chance=0.99):
+def potential_refresh(
+        driver: WebDriver, 
+        expected_condition, 
+        value, 
+        chance: float = 0.99
+    ):
     if random.uniform(0, 1) > chance:
         driver.refresh()
     return wait_until(driver, expected_condition, value)
